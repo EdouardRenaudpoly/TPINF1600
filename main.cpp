@@ -30,9 +30,7 @@ int main()
     Vous devez completer les fichiers assembleurs fournis dans le repertoire /src_TODO
     Vous pouvez utiliser cet espace libre pour faire des appels à vos fonctions pour les tester.
     */
-    Complex c = Complex(1,2);
-    cout << c.realPart();
-    cout << c.imagPart();
+
     ///////////////////////////   PARTIE 2: TESTS   ////////////////////////////
     /*
     Pour vous aider a vous valider. Le resultat sera imprime dans le terminal
