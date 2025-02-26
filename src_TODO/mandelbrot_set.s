@@ -37,7 +37,64 @@ _Z13mandelbrotSetRK7ComplexS1_i:        # mangling vous est fourni
     movl    %esp, %ebp
 
     # TODO
+    movl  8(%ebp), %edx #z
+    movl  12(%ebp), %ebx #c
+    movl  16(%ebp), %eax   #count
 
+    push %eax #caller-saved
+    push %ecx
+    push %edx
+
+    flds escapeRadiusFloat
+    push %edx
+    call _ZNK7Complex7modulusEv
+    add $4,%esp
+    fcompp
+    fstsw %ax
+    sahf
+
+    pop %edx
+    pop %ecx
+    pop %eax
+
+    jae end
+    cmpl maxIterations, %eax
+    jae end
+    addl $0x01, %eax
+
+    push %eax #caller-saved
+    push %ecx
+    push %edx
+
+    push %edx
+    push %edx
+    push %edx
+    call _ZmlRK7ComplexS1_
+    addl $12, %esp
+
+    pop %edx
+    pop %ecx
+    pop %eax
+
+    push %eax #caller-saved
+    push %ecx
+    push %edx
+
+    push %ebx
+    push %edx
+    push %edx
+    call _ZplRK7ComplexS1_
+    addl $12, %esp
+
+    pop %edx
+    pop %ecx
+    pop %eax
+
+    push %eax
+    push %ebx
+    push %edx
+    call _Z13mandelbrotSetRK7ComplexS1_i
+    addl $12, %esp
     end:
     # epilogue
     leave
