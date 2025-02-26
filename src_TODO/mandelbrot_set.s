@@ -46,6 +46,15 @@ _Z13mandelbrotSetRK7ComplexS1_i:        # mangling vous est fourni
     push %edx
 
     flds escapeRadiusFloat
+
+    pop %edx
+    pop %ecx
+    pop %eax
+
+    push %eax #caller-saved
+    push %ecx
+    push %edx
+
     push %edx
     call _ZNK7Complex7modulusEv
     add $4,%esp
