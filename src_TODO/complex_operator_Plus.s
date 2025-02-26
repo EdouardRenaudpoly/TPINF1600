@@ -18,10 +18,6 @@ L'opérateur plus doit appeler un constructeur pour créer le nombre complexe r�
 
 
 .data
-reel:
-.float 0
-complexe:
-.float 0
 
 .text
 .globl _ZplRK7ComplexS1_            # mangling vous est fourni
@@ -34,31 +30,21 @@ _ZplRK7ComplexS1_:
     push    %edi                     # Sauvegarder %edi (callee-saved)
 
     # TODO
-    movl  8(%ebp), %eax #adresse 1er complexe
-    movl  12(%ebp), %ebx   #adresse 2eme complexe
-    push %eax
-    call _ZNK7Complex8realPartEv
-    addl $4, %esp
-    push %ebx
-    call _ZNK7Complex8realPartEv
-    addl $4, %esp
+    movl  8(%ebp), %edx #this
+    movl  12(%ebp), %eax #adresse 1er complexe
+    movl  16(%ebp), %ebx   #adresse 2eme complexe
+    flds (%eax)
+    flds (%ebx)
     faddp
-    fstps reel
-    push %eax
-    call _ZNK7Complex8imagPartEv
-    addl $4, %esp
-    push %ebx
-    call _ZNK7Complex8imagPartEv
-    addl $4, %esp
+    flds 4(%eax)
+    flds 4(%ebx)
     faddp
-    fstps complexe
-    flds complexe
-    flds reel
-    subl $8, %esp   
-    fstps (%esp)     
-    fstps 4(%esp)    
-    call _ZN7ComplexC1Eff  
-    addl $8, %esp
+    sub $8, %esp
+    fstps 4(%esp)
+    fstps (%esp)
+    push %edx
+    call _ZN7ComplexC1Eff
+    addl $12, %esp
      # Épilogue : Restaurer les registres et revenir
     popl    %edi                     # Restaurer %edi
     popl    %ebx                     # Restaurer %ebx

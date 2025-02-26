@@ -29,43 +29,29 @@ _ZmlRK7ComplexS1_  :
     push    %edi                     # Sauvegarder %edi (callee-saved)
 
   # TODO
-    movl  8(%ebp), %eax #adresse 1er complexe
-    movl  12(%ebp), %ebx   #adresse 2eme complexe
-    push %eax
-    call _ZNK7Complex8realPartEv
-    addl $4, %esp
-    push %ebx
-    call _ZNK7Complex8realPartEv
-    addl $4, %esp
+    movl  8(%ebp), %edx #this
+    movl  12(%ebp), %eax #adresse 1er complexe
+    movl  16(%ebp), %ebx   #adresse 2eme complexe
+    flds (%eax)
+    flds (%ebx)
     fmulp
-    push %eax
-    call _ZNK7Complex8imagPartEv
-    addl $4, %esp
-    push %ebx
-    call _ZNK7Complex8imagPartEv
-    addl $4, %esp
+    flds 4(%eax)
+    flds 4(%ebx)
     fmulp
-    fsubp
-    push %eax
-    call _ZNK7Complex8realPartEv
-    addl $4, %esp
-    push %ebx
-    call _ZNK7Complex8imagPartEv
-    addl $4, %esp
+    fsubrp
+    flds (%eax)
+    flds 4(%ebx)
     fmulp
-    push %eax
-    call _ZNK7Complex8imagPartEv
-    addl $4, %esp
-    push %ebx
-    call _ZNK7Complex8realPartEv
-    addl $4, %esp
+    flds 4(%eax)
+    flds (%ebx)
     fmulp
     faddp
     subl $8, %esp 
-    fstps 4(%ebp)
-    fstps (%ebp)
+    fstps 4(%esp)
+    fstps (%esp)
+    push %edx
     call _ZN7ComplexC1Eff
-    addl $8, %esp
+    addl $12, %esp
     # epilogue
     popl    %edi                     # Restaurer %edi
     popl    %ebx                     # Restaurer %ebx
