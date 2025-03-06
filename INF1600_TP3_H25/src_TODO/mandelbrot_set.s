@@ -38,19 +38,39 @@ _Z13mandelbrotSetRK7ComplexS1_i:        # mangling vous est fourni
 
     # TODO
     movl  8(%ebp), %edx #z
-    movl  12(%ebp), %ebx #c
+    movl  12(%ebp), %ecx #c
     movl  16(%ebp), %eax   #count
+
+    flds escapeRadiusFloat
+    cmpl $0, %eax
+    je initialiserC
+    jmp restant
+    initialiserC:
+    push %eax #caller-saved
+    push %edx
+
+    pushl $8       # Taille en octets
+    call malloc    # Appel à malloc
+    addl $4, %esp  # Nettoyage de la pile (paramètre passé)
+    movl %eax, %ecx  # Stocker le pointeur retourné par malloc dans ECX
+
+    pop %edx
+    pop %eax
 
     push %eax #caller-saved
     push %ecx
     push %edx
 
-    flds escapeRadiusFloat
+    push 4(%edx)
+    push (%edx)
+    push %ecx
+    call _ZN7ComplexC1Eff
+    add $12, %esp
 
     pop %edx
     pop %ecx
     pop %eax
-
+    restant:
     push %eax #caller-saved
     push %ecx
     push %edx
@@ -58,12 +78,15 @@ _Z13mandelbrotSetRK7ComplexS1_i:        # mangling vous est fourni
     push %edx
     call _ZNK7Complex7modulusEv
     add $4,%esp
-    fcompp
-    fstsw %ax
-    sahf
 
     pop %edx
     pop %ecx
+    pop %eax
+
+    push %eax
+    fcompp
+    fstsw %ax
+    sahf
     pop %eax
 
     jae end
@@ -89,8 +112,8 @@ _Z13mandelbrotSetRK7ComplexS1_i:        # mangling vous est fourni
     push %ecx
     push %edx
 
-    push %ebx
     push %edx
+    push %ecx
     push %edx
     call _ZplRK7ComplexS1_
     addl $12, %esp
@@ -100,10 +123,27 @@ _Z13mandelbrotSetRK7ComplexS1_i:        # mangling vous est fourni
     pop %eax
 
     push %eax
-    push %ebx
+    push %ecx
     push %edx
     call _Z13mandelbrotSetRK7ComplexS1_i
     addl $12, %esp
+    cmpl $2,escapeRadiusInt
+    je freeComplex
+    jmp end
+    freeComplex:
+    push %eax
+    push %ecx
+    push %edx
+
+    pushl %ecx  # Passer l'adresse allouée à free
+    call free
+    addl $4, %esp
+
+    pop %edx
+    pop %ecx
+    pop %eax
+    subl $2, escapeRadiusInt
+
     end:
     # epilogue
     leave

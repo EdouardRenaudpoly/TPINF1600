@@ -1,5 +1,5 @@
 # INF1600 - H25 - TP3
-g++ -o mon_projet main.cpp -I./include -I./raylib/include
+
 Lien entre C++ et assembleur x86.
 Appels de fonction et récursivité.
 
@@ -291,5 +291,3 @@ L’ensemble de Mandelbrot généré de façon programmatique!
 ![alt text](assets/final.png)
 
 ### Bon travail!
-# TPINF1600
-# TPINF1600

@@ -11,11 +11,8 @@ Description: Visualisation d'un calcul recursif de la serie de Mandelbrot a l'ai
 #include "draw.hpp"
 #include "mandelbrot.hpp"
 #include "tests.hpp"
-#include "iostream"
-using namespace std;
 
-int main() 
-{
+int main() {
 
     /////////////////////////// PARTIE 0: COMPILATION ///////////////////////////
     /*
@@ -36,6 +33,7 @@ int main()
     Pour vous aider a vous valider. Le resultat sera imprime dans le terminal
     Commenter/decommenter au besoin
     */
+
     runTests();
 
     /////////////////////////// PARTIE 3: AFFICHAGE ///////////////////////////

@@ -32,26 +32,111 @@ _ZmlRK7ComplexS1_  :
     movl  8(%ebp), %edx #this
     movl  12(%ebp), %eax #adresse 1er complexe
     movl  16(%ebp), %ebx   #adresse 2eme complexe
-    flds (%eax)
-    flds (%ebx)
+
+    push %eax
+    push %edx
+    
+    push %eax
+    call _ZNK7Complex8realPartEv
+    add $4, %esp
+
+    pop %edx
+    pop %eax
+
+    push %eax
+    push %edx
+    
+    push %ebx
+    call _ZNK7Complex8realPartEv
+    add $4, %esp
+
+    pop %edx
+    pop %eax
+
     fmulp
-    flds 4(%eax)
-    flds 4(%ebx)
+
+    push %eax
+    push %edx
+    
+    push %eax
+    call _ZNK7Complex8imagPartEv
+    add $4, %esp
+
+    pop %edx
+    pop %eax
+    
+    push %eax
+    push %edx
+    
+    push %ebx
+    call _ZNK7Complex8imagPartEv
+    add $4, %esp
+
+    pop %edx
+    pop %eax
+
     fmulp
     fsubrp
-    flds (%eax)
-    flds 4(%ebx)
+
+    push %eax
+    push %edx
+    
+    push %eax
+    call _ZNK7Complex8realPartEv
+    add $4, %esp
+
+    pop %edx
+    pop %eax
+    
+    push %eax
+    push %edx
+    
+    push %ebx
+    call _ZNK7Complex8imagPartEv
+    add $4, %esp
+
+    pop %edx
+    pop %eax
+
     fmulp
-    flds 4(%eax)
-    flds (%ebx)
+    
+    push %eax
+    push %edx
+    
+    push %eax
+    call _ZNK7Complex8imagPartEv
+    add $4, %esp
+
+    pop %edx
+    pop %eax
+    
+    push %eax
+    push %edx
+    
+    push %ebx
+    call _ZNK7Complex8realPartEv
+    add $4, %esp
+
+    pop %edx
+    pop %eax
+
     fmulp
     faddp
-    subl $8, %esp 
+
+    push %eax
+    push %ebx
+    push %ecx
+
+    sub $8, %esp
     fstps 4(%esp)
     fstps (%esp)
     push %edx
     call _ZN7ComplexC1Eff
     addl $12, %esp
+
+    pop %ecx
+    pop %ebx
+    pop %eax
     # epilogue
     popl    %edi                     # Restaurer %edi
     popl    %ebx                     # Restaurer %ebx
